@@ -1,5 +1,6 @@
 <?php
 include "head.php";
+
 date_default_timezone_set('Asia/Jakarta');
 if(($_SESSION['login'] == true)){
   if($_SESSION['kedudukan'] == "admin" || $_SESSION['kedudukan'] == "superadmin"){
@@ -14,44 +15,33 @@ if(($_SESSION['login'] == true)){
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                   <div class="modal-header">
-                      <h5 class="modal-title">Download File Laporan Absen(.xlsx)</h5>
+                      <h5 class="modal-title">Download File Laporan Absen</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                 <div class="modal-body">
+                  <form action="">
                   <div class="container-fluid">
                     <input class="form-control" type="text" id="filen" placeholder="nama file" value="Absen <?php echo date("Y-m-d ");?>">
+                    <br>
+                    <label for="">Tanggal awal</label>
+                    <input class="form-control" type="date" id="awal" placeholder="" value="Absen <?php echo date("Y-m-d ");?>">
+                    <br>
+                    <label for="">Tanggal akhir</label>
+                    <input class="form-control" type="date" id="akhir" placeholder="" value="Absen <?php echo date("Y-m-d ");?>">
+                    <br>                        
+                    <label for="">Tipe File</label>
+                            <select name="extype" class="form-control">
+                              <option>Excel</option>
+                              <option>PDF</option>
+                            </select>                        
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" onclick = "ExportToExcel('xlsx')" class="btn btn-primary">Download</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="modal fade" id="modelId2" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title">Download File Laporan Absen(.PDF)</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="cetak_pdf_absen.php" method="GET">
-                    <div class="modal-body">
-                      <div class="container-fluid">
-                    <input class="form-control" type="text" name="nis" id="nis" placeholder="NIS">
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-success">Download</button>
-                  </form>
-                </div>
+                  <button type="submit" name="ekspor" class="btn btn-primary">Download</button>
+                </div></form>
               </div>
             </div>
           </div>
@@ -64,26 +54,40 @@ if(($_SESSION['login'] == true)){
               
             });
           </script>
-                <!-- TABLE -->
+              
+
                 <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                           <div class="x_title">
+                          
                             <h2>Absen Siswa</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                              <li>
-                                <div class="dropdown open">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+
+
+                            <button class="btn btn-success mx-3" type="button" id="triggerId" data-toggle="modal" data-target="#modelId" aria-haspopup="true"
                                     aria-expanded="false">
                                       Export
                                     </button>
-                                <div class="dropdown-menu" aria-labelledby="triggerId">
-                                <a name="" id="" class="dropdown-item text-dark" data-toggle="modal" data-target="#modelId" href="#" role="button">Excel</a>
-                                <a name="" id="" class="dropdown-item text-dark" data-toggle="modal" data-target="#modelId2" href="#" role="button">Laporan PDF</a>
-                                </div>
-                              </div>
-                              </li>
-                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                              </li>
+                                    
+                            <ul class="nav navbar-left panel_toolbox">
+                            <div class="col-md-4">
+
+<form action="" method="GET">
+    <div class="input-group mb-3">
+        <input type="text" name="search" required value="<?php if(isset($_GET['search'])){echo $_GET['search']; } ?>" class="form-control" placeholder="Search data">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+</div>
+                            <form class="form-inline" method="POST" action="">
+			<label>Tanggal:</label>
+			<input type="date" class="form-control" placeholder="Start"  name="date1" value="<?php echo isset($_POST['date1']) ? $_POST['date1'] : '' ?>" />
+			<label class="mx-1">Sampai</label>
+			<input type="date" class="form-control" placeholder="End"  name="date2" value="<?php echo isset($_POST['date2']) ? $_POST['date2'] : '' ?>"/>
+			<button class="btn btn-primary mx-1" name="search"><span class="glyphicon glyphicon-search"></span></button>
+		</form>
+                            <ul class="nav navbar-right panel_toolbox">
+                              
                             </ul>
                             <div class="clearfix"></div>
                           </div>
@@ -92,8 +96,10 @@ if(($_SESSION['login'] == true)){
                                   <div class="col-sm-12">
                                     <div class="card-box table-responsive">
                             <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
-                              <thead>
-                                <tr>
+                          
+			<table class="table table-bordered">
+				<thead class="table-Secondary">
+					<tr>
                                   <th>NO</th>
                                   <th>NIS</th>
                                   <th>NAMA</th>
@@ -101,45 +107,14 @@ if(($_SESSION['login'] == true)){
                                   <th>JURUSAN</th>
                                   <th>TANGGAL</th>
                                   <th>JAM MASUK</th>
-                                  <!-- <th>BARCODE</th>
-                                  <th>ACTION</th> -->
-                                </tr>
-                              </thead>
-                              <tbody>
-                              <?php
-                              
-                              require '../vendors/autoload.php';
-                              $tanggal_sekarang = date("Y-m-d ");
-                              $jam_dari = "00:00:00";
-                              $jam_sampai = "23:59:59";
-                              //$Qcek_tanggal =  "SELECT * FROM absen_siswa WHERE tanggal BETWEEN '". $tanggal_sekarang . $jam_dari ."' AND '". $tanggal_sekarang . $jam_sampai ."'";                          
-                              $query = mysqli_query($conn,"SELECT * FROM absen_siswa");
-                              $no=1;
-                              while($data = mysqli_fetch_array($query,MYSQLI_BOTH)){
-                              ?>
-                              
-                                <tr>
-                                  
-                                  <td><?php echo $no;?></td>
-                                  <td><?php echo $data['nis'];?></td>
-                                  <td><?php echo $data['nama'];?></td>
-                                  <td><?php echo $data['kelas'];?></td>
-                                  <td><?php echo $data['jurusan'];?></td>
-                                  <td><?php echo $data['tanggal'];?></td>
-                                  <td><?php echo $data['jam'];?></td>
-                                  <!-- <td>
-                                    <img src="../bar/<?= $data['nama'],$data['nis']; ?>.jpg" alt="">
-                                  </td> -->
-                                  <!-- <td>
-                                    <a name="" id="" class="btn btn-danger" href="delAbsen.php?kode=" role="button">Hapus</a>
-                                  </td>  -->
-                                </tr>
-                                <?php
-                                $no++;
-                              }?>
-                              </tbody>
-                              
-                            </table>
+                                  <th>AKSI</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php include'range.php'?>	
+				</tbody>
+			</table>
+	
                           </div>
                         </div>
                       </div>

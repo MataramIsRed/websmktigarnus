@@ -8,16 +8,16 @@ if(isset($_POST['absen'])){
     $jam_dari = "00:00:00";
     $jam_sampai = "23:59:59";
     $Qcek_tanggal =  "SELECT * FROM absen_siswa WHERE tanggal BETWEEN '". $tanggal_sekarang . $jam_dari ."' AND '". $tanggal_sekarang . $jam_sampai ."' AND nis = '".$_POST['nis']."'";
-    $cek_tanggal =  $conn -> query($Qcek_tanggal);
-    $cek_jamset = $conn -> query("SELECT * FROM umum WHERE nama='jam_masuk'");
+    $cek_tanggal =  mysqli_query($conn, $Qcek_tanggal);
+    $cek_jamset = mysqli_query($conn, "SELECT * FROM umum WHERE nama='jam_masuk'");
     $jamset = mysqli_fetch_array($cek_jamset,MYSQLI_BOTH);
     $timeLimit = $_POST['timeLimit'];
     if($jamset['keterangan'] != $timeLimit){
-        $conn -> query("UPDATE umum SET keterangan = '".$timeLimit."' WHERE nama='jam_masuk'");
+        mysqli_query($conn, "UPDATE umum SET keterangan = '".$timeLimit."' WHERE nama='jam_masuk'");
     }
     $num_rows = mysqli_num_rows($cek_tanggal);
     $sql_cek = "SELECT * FROM data_siswa WHERE nis='".$_POST['nis']."'";
-	$query_cek = $conn -> query($sql_cek);
+	$query_cek = mysqli_query($conn, $sql_cek);
 	$data_cek = mysqli_fetch_array($query_cek,MYSQLI_BOTH);
     $num = mysqli_num_rows($query_cek);
     $keterangan = "";

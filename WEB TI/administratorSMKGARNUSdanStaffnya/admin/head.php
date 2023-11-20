@@ -103,6 +103,12 @@ if(isset($_SESSION['login'])){
                     
                     </ul>
                   </li>
+                  <li><a><i class="fa fa-cog"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="edit_export.php">Edit Export</a></li>
+                    
+                    </ul>
+                  </li>
                 </ul>
               </div>
 

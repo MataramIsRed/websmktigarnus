@@ -20,6 +20,7 @@ include "../connn.php";
                                   <td> ".$data['jurusan']."</td>
                                   <td> ".$data['tanggal']."</td>
                                   <td> ".$data['jam']."</td>
+                                  
                                 </tr>
                                 ";
                                 $no++;
