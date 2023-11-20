@@ -9,25 +9,40 @@ if(isset($_POST['absen'])){
     $jam_sampai = "23:59:59";
     $Qcek_tanggal =  "SELECT * FROM absen_siswa WHERE tanggal BETWEEN '". $tanggal_sekarang . $jam_dari ."' AND '". $tanggal_sekarang . $jam_sampai ."' AND nis = '".$_POST['nis']."'";
     $cek_tanggal =  mysqli_query($conn, $Qcek_tanggal);
-
+    $cek_jamset = mysqli_query($conn, "SELECT * FROM umum WHERE nama='jam_masuk'");
+    $jamset = mysqli_fetch_array($cek_jamset,MYSQLI_BOTH);
+    $timeLimit = $_POST['timeLimit'];
+    if($jamset['keterangan'] != $timeLimit){
+        mysqli_query($conn, "UPDATE umum SET keterangan = '".$timeLimit."' WHERE nama='jam_masuk'");
+    }
     $num_rows = mysqli_num_rows($cek_tanggal);
     $sql_cek = "SELECT * FROM data_siswa WHERE nis='".$_POST['nis']."'";
 	$query_cek = mysqli_query($conn, $sql_cek);
 	$data_cek = mysqli_fetch_array($query_cek,MYSQLI_BOTH);
     $num = mysqli_num_rows($query_cek);
+    $keterangan = "";
 
     if($num_rows == 0){
         if($num == 1){
+            $poin = 0 + $data_cek['poin'] + 15;
             $tanggal = date("Y-m-d");
             $jam = date("H:i:s");
-        $sql_simpan = "INSERT INTO absen_siswa (`nis`, `nama`,`jurusan`,`kelas`, `tanggal`, `jam`) VALUES (
+            if($jam >= $timeLimit){
+                $keterangan = "Terlambat";
+            }else{
+                $keterangan = "Hadir";
+            }
+        $sql_up_poin = "UPDATE data_siswa SET poin='".$poin."' WHERE nis='".$_POST['nis']."'";
+        $sql_simpan = "INSERT INTO absen_siswa (`nis`, `nama`,`jurusan`,`kelas`, `tanggal`, `jam`, `keterangan`) VALUES (
             '".$_POST['nis']."',
             '".$data_cek['nama']."',
             '".$data_cek['jurusan']."',
             '".$data_cek['kelas']."',
             '".$tanggal."',
-            '".$jam."')";
+            '".$jam."',
+            '".$keterangan."')";
         $query_simpan = mysqli_query($conn, $sql_simpan);
+        $poin_simpan = mysqli_query($conn, $sql_up_poin);
         if ($query_simpan) {
             // echo "<script>alert('Absensi Sukses'); </script>";
             echo "<meta http-equiv='refresh' content='0; url=absen.php'>";

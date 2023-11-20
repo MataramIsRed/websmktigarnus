@@ -3,7 +3,10 @@ include "head.php";
 
 if(($_SESSION['login'] == true)){
   if($_SESSION['kedudukan'] == "admin" || $_SESSION['kedudukan'] == "superadmin"){
-?>
+    $jam_maks = "SELECT * FROM umum WHERE nama='jam_masuk'";
+    $sql_jam = mysqli_query($conn,$jam_maks);
+    $jam = mysqli_fetch_array($sql_jam,MYSQLI_BOTH);
+?>  
         <!-- page content -->
         <div class="right_col" role="main">
         <!-- Start to do list -->
@@ -15,6 +18,11 @@ if(($_SESSION['login'] == true)){
               <div class="form-group">
                 <input type="text"
                   class="form-control" name="nis" id="1" aria-describedby="helpId" placeholder="KODE" autofocus>
+              </div>
+              <div class="form-group">
+                <label for="">Batas Waktu</label>
+                <input type="time"
+                  class="form-control" name="timeLimit" id="1" aria-describedby="helpId" value="<?php echo $jam['keterangan'];?>" autofocus>
               </div>
               <div class="form-group">
                 <button type="submit" name="absen" class="btn btn-primary">Submit</button>
