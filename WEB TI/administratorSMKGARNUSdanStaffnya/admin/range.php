@@ -10,16 +10,15 @@ include "../connn.php";
 			while($fetch=mysqli_fetch_array($query)){
 ?>
 	<tr>
-		<td> <?php ".$no." ?> </td>
+		<td> <?php echo $no ?> </td>
 		<td><?php echo $fetch['nis']?></td>
 		<td><?php echo $fetch['nama']?></td>
 		<td><?php echo $fetch['kelas']?></td>
 		<td><?php echo $fetch['jurusan']?></td>
-    <td><?php echo $fetch['tanggal']?></td>
-    <td><?php echo $fetch['jam']?></td>
 		<td>
-                                <button id_mahasiswa="<?php echo $data['nis']; ?>" id_absensi="<?php echo $data['id_absensi']; ?>" class="absensi btn btn-success btn-circle" ><i class="fa fa-clock-o"></i> Absensi</button>
-                                <button id_mahasiswa="<?php echo $data['nis']; ?>" class="cetak btn btn-primary btn-circle" ><i class="fa fa-print"></i> Cetak</button>
+                                <a href="cetak_pdf_absen.php?nis=<?php echo $fetch['nis'];?>" id_mahasiswa="<?php echo $data['nis']; ?>" id_absensi="<?php echo $data['id_absensi']; ?>" class="absensi btn btn-success btn-circle" ><i class="fa fa-clock-o"></i> Absensi</a>
+
+                                <button id_mahasiswa="<?php echo $data['nis']; ?>" class="cetak btn btn-primary btn-circle" data-toggle="modal" data-target="#modelIdx"><i class="fa fa-print"></i> Cetak</button>
                             </td>
 														<?php $no++; ?>
 	</tr>

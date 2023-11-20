@@ -11,7 +11,7 @@ if(($_SESSION['login'] == true)){
           
           
           <!-- Modal -->
-          <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+          <div class="modal fade" id="modelIdx" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                   <div class="modal-header">
@@ -21,21 +21,16 @@ if(($_SESSION['login'] == true)){
                         </button>
                     </div>
                 <div class="modal-body">
-                  <form action="">
+                  <form action="cetak_pdf_absentgl.php" method="GET">
                   <div class="container-fluid">
-                    <input class="form-control" type="text" id="filen" placeholder="nama file" value="Absen <?php echo date("Y-m-d ");?>">
+                    <input class="form-control" type="text" id="nis" placeholder="Masukan Nis Pelajar">
                     <br>
                     <label for="">Tanggal awal</label>
-                    <input class="form-control" type="date" id="awal" placeholder="" value="Absen <?php echo date("Y-m-d ");?>">
+                    <input class="form-control" type="date" id="date0" placeholder="" value="Absen <?php echo date("Y-m-d ");?>">
                     <br>
                     <label for="">Tanggal akhir</label>
-                    <input class="form-control" type="date" id="akhir" placeholder="" value="Absen <?php echo date("Y-m-d ");?>">
-                    <br>                        
-                    <label for="">Tipe File</label>
-                            <select name="extype" class="form-control">
-                              <option>Excel</option>
-                              <option>PDF</option>
-                            </select>                        
+                    <input class="form-control" type="date" id="date1" placeholder="" value="Absen <?php echo date("Y-m-d ");?>">
+                    <br>                                          
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -59,34 +54,30 @@ if(($_SESSION['login'] == true)){
                 <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                           <div class="x_title">
-                          
                             <h2>Absen Siswa</h2>
-
-
-                            <button class="btn btn-success mx-3" type="button" id="triggerId" data-toggle="modal" data-target="#modelId" aria-haspopup="true"
+                            <button class="btn btn-success mx-3" type="button" id="triggerId" data-toggle="modal" data-target="#modelIdx" aria-haspopup="true"
                                     aria-expanded="false">
                                       Export
                                     </button>
-                                    
-                            <ul class="nav navbar-left panel_toolbox">
-                            <div class="col-md-4">
 
-<form action="" method="GET">
-    <div class="input-group mb-3">
-        <input type="text" name="search" required value="<?php if(isset($_GET['search'])){echo $_GET['search']; } ?>" class="form-control" placeholder="Search data">
-        <button type="submit" class="btn btn-primary">Search</button>
-    </div>
-</form>
-
-</div>
-                            <form class="form-inline" method="POST" action="">
-			<label>Tanggal:</label>
-			<input type="date" class="form-control" placeholder="Start"  name="date1" value="<?php echo isset($_POST['date1']) ? $_POST['date1'] : '' ?>" />
-			<label class="mx-1">Sampai</label>
-			<input type="date" class="form-control" placeholder="End"  name="date2" value="<?php echo isset($_POST['date2']) ? $_POST['date2'] : '' ?>"/>
-			<button class="btn btn-primary mx-1" name="search"><span class="glyphicon glyphicon-search"></span></button>
-		</form>
-                            <ul class="nav navbar-right panel_toolbox">
+                                    <ul class="nav navbar-right panel_toolbox">
+                                      <form action="" method="GET">
+                                        <input type="text" name="search" required value="<?php if(isset($_GET['search'])){echo $_GET['search']; } ?>" class="form-control col-sm-5" placeholder="Search data">
+                                        <button type="submit" class="btn btn-primary">Search</button>
+                                      </form>
+                                      <form class="form-inline" method="POST" action="">
+                                        <label>Tanggal:</label>
+                                <li>
+                                  <input type="date" class="form-control" placeholder="Start"  name="date1" value="<?php echo isset($_POST['date1']) ? $_POST['date1'] : '' ?>" />
+                                </li>
+                                
+                                <label class="mx-1">Sampai</label>
+                                <li>
+                                <input type="date" class="form-control" placeholder="End"  name="date2" value="<?php echo isset($_POST['date2']) ? $_POST['date2'] : '' ?>"/>
+                                </li>
+                                <label for=""></label>
+                                <button class="btn btn-primary mx-1" name="search"><span class="glyphicon glyphicon-search"></span></button>
+                              </form>
                               
                             </ul>
                             <div class="clearfix"></div>
@@ -97,24 +88,22 @@ if(($_SESSION['login'] == true)){
                                     <div class="card-box table-responsive">
                             <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
                           
-			<table class="table table-bordered">
-				<thead class="table-Secondary">
-					<tr>
+                                <table class="table table-bordered">
+                                  <thead class="table-Secondary">
+                                    <tr>
                                   <th>NO</th>
                                   <th>NIS</th>
                                   <th>NAMA</th>
                                   <th>KELAS</th>
                                   <th>JURUSAN</th>
-                                  <th>TANGGAL</th>
-                                  <th>JAM MASUK</th>
-                                  <th>AKSI</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php include'range.php'?>	
-				</tbody>
-			</table>
-	
+                                  <th>ACTION</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <?php include 'range.php';?>	
+                                </tbody>
+                              </table>
+                          
                           </div>
                         </div>
                       </div>
