@@ -41,8 +41,8 @@ if(isset($_POST['absen'])){
             '".$tanggal."',
             '".$jam."',
             '".$keterangan."')";
-        $query_simpan = $conn -> query($sql_simpan);
-        $poin_simpan = $conn -> query($sql_up_poin);
+        $query_simpan = mysqli_query($conn, $sql_simpan);
+        $poin_simpan = mysqli_query($conn, $sql_up_poin);
         if ($query_simpan) {
             // echo "<script>alert('Absensi Sukses'); </script>";
             echo "<meta http-equiv='refresh' content='0; url=absen.php'>";

@@ -59,9 +59,7 @@ if(($_SESSION['login'] == true)){
                                   <th>JURUSAN</th>
                                   <th>TANGGAL</th>
                                   <th>JAM MASUK</th>
-                                  <!-- <th>BARCODE</th>
-                                  <th>ACTION</th> -->
-                                </tr>
+                                                                </tr>
                               </thead>
                               <tbody>
                               <?php
@@ -85,10 +83,6 @@ if(($_SESSION['login'] == true)){
                                   <td><?php echo $data['jurusan'];?></td>
                                   <td><?php echo $data['tanggal'];?></td>
                                   <td><?php echo $data['jam'];?></td>
-                                
-                                  <!-- <td>
-                                    <a name="" id="" class="btn btn-danger" href="delAbsen.php?kode=<?php echo $data['id'];?>" role="button">Hapus</a>
-                                  </td>  -->
                                 </tr>
                                 <?php
                                 $no++;
