@@ -23,19 +23,19 @@ if(($_SESSION['login'] == true)){
                 <div class="modal-body">
                   <form action="cetak_pdf_absentgl.php" method="GET">
                   <div class="container-fluid">
-                    <input class="form-control" type="text" id="nis" placeholder="Masukan Nis Pelajar">
+                    <input class="form-control" type="text" name="nis" placeholder="Masukan Nis Pelajar">
                     <br>
                     <label for="">Tanggal awal</label>
-                    <input class="form-control" type="date" id="date0" placeholder="" value="Absen <?php echo date("Y-m-d ");?>">
+                    <input class="form-control" type="date" name="date0" placeholder="" value="Absen <?php echo date("Y-m-d ");?>">
                     <br>
                     <label for="">Tanggal akhir</label>
-                    <input class="form-control" type="date" id="date1" placeholder="" value="Absen <?php echo date("Y-m-d ");?>">
+                    <input class="form-control" type="date" name="date1" placeholder="" value="Absen <?php echo date("Y-m-d ");?>">
                     <br>                                          
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" name="ekspor" class="btn btn-primary">Download</button>
+                  <button type="submit" name="" class="btn btn-primary">Download</button>
                 </div></form>
               </div>
             </div>
@@ -59,23 +59,18 @@ if(($_SESSION['login'] == true)){
                                     aria-expanded="false">
                                       Export
                                     </button>
-
+                                    
                                     <ul class="nav navbar-right panel_toolbox">
-                                      <form action="" method="GET">
-                                        <input type="text" name="search" required value="<?php if(isset($_GET['search'])){echo $_GET['search']; } ?>" class="form-control col-sm-5" placeholder="Search data">
-                                        <button type="submit" class="btn btn-primary">Search</button>
-                                      </form>
-                                      <form class="form-inline" method="POST" action="">
-                                        <label>Tanggal:</label>
-                                <li>
-                                  <input type="date" class="form-control" placeholder="Start"  name="date1" value="<?php echo isset($_POST['date1']) ? $_POST['date1'] : '' ?>" />
-                                </li>
-                                
-                                <label class="mx-1">Sampai</label>
-                                <li>
-                                <input type="date" class="form-control" placeholder="End"  name="date2" value="<?php echo isset($_POST['date2']) ? $_POST['date2'] : '' ?>"/>
-                                </li>
-                                <label for=""></label>
+                                      <form method="GET">
+                                      <select name="jurusan" class="form-control col-md-8">
+                                        <option>--Jurusan--</option>
+                                        <option>RPL</option>
+                                        <option>TKJ</option>
+                                        <option>TJA</option>
+                                        <option>AN</option>
+                                        <option>MM</option>
+                                        <option>OTKP</option>
+                                          </select> 
                                 <button class="btn btn-primary mx-1" name="search"><span class="glyphicon glyphicon-search"></span></button>
                               </form>
                               

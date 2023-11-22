@@ -1,10 +1,9 @@
 
 
 <?php
-require('../vendors/FPDF/fpdf.php');
+require('../vendors/fpdf186/fpdf.php');
 include "../connn.php";
 header('Content-Type: application/pdf');
-header('Content-Disposition: inline; filename="'.$namafile.'"');
 $nis = $_GET['nis'];
 $dat1 = $_GET['date0'];
 $dat2 = $_GET['date1'];
@@ -49,7 +48,7 @@ $pdf->SetLineWidth(1);
 
     $no= 0;
 
-    $sql="SELECT * FROM absen_siswa WHERE nis='".$nis."'";
+    $sql="SELECT * FROM absen_siswa WHERE nis='".$nis."' AND tanggal BETWEEN '".$dat1."' AND '".$dat2."'";
     $hasil=mysqli_query($conn,$sql);
 
     while ($data = mysqli_fetch_assoc($hasil)){
@@ -74,6 +73,6 @@ $pdf->SetLineWidth(1);
     $hasilnama = mysqli_fetch_array($hasilsql); 
     $nama= $hasilnama['nama'];
     $namafile = 'Absensi-'.$nama.'-'.date('YmdHis').'.pdf';
-    $pdf->Output('../laporan/'.$namafile, 'F');
-    readfile('../laporan/'.$namafile);
+    $pdf->Output('../'.$namafile, 'F');
+    readfile('../'.$namafile);
 ?>

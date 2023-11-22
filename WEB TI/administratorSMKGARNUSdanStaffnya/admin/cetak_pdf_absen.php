@@ -1,10 +1,9 @@
 
 
 <?php
-require('../vendors/FPDF/fpdf.php');
+require('../vendors/fpdf186/fpdf.php');
 include "../connn.php";
 header('Content-Type: application/pdf');
-header('Content-Disposition: inline; filename="'.$namafile.'"');
 $nis = $_GET['nis'];
 $pdf = new FPDF();
 $pdf->AddPage();
@@ -72,6 +71,6 @@ $pdf->SetLineWidth(1);
     $hasilnama = mysqli_fetch_array($hasilsql); 
     $nama= $hasilnama['nama'];
     $namafile = 'Absensi-'.$nama.'-'.date('YmdHis').'.pdf';
-    $pdf->Output('../laporan/'.$namafile, 'F');
-    readfile('../laporan/'.$namafile);
+    $pdf->Output('../'.$namafile, 'F');
+    readfile('../'.$namafile);
 ?>

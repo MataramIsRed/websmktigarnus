@@ -50,8 +50,14 @@
                         <div class="form-group row">
                           <label class="control-label col-md-3 col-sm-3 col-xs-3">Jurusan</label>
                           <div class="col-md-9 col-sm-9 col-xs-9 input-lg">
-                            <input type="text" name="jurusan" class="form-control " placeholder="Contoh: RPL 2" data-inputmask="'mask' : '(999) 999-9999'" required>
-                          </div>
+                          <select name="jurusan" class="form-control">
+                              <option>RPL</option>
+                              <option>TKJ</option>
+                              <option>TJA</option>
+                              <option>AN</option>
+                              <option>MM</option>
+                              <option>OTKP</option>
+                                </select>                             </div>
                         </div>
                         <div class="form-group row">
                           <label class="control-label col-md-3 col-sm-3 col-xs-3">Foto</label>
@@ -122,10 +128,8 @@
                         <div class="x_panel">
                           <div class="x_title">
                             <h2>Data Siswa</h2>
-                            <form action="POST">
-                              <input type="text"
-                                class="form-control col-sm-3 mx-3" name="" id="" aria-describedby="helpId" placeholder="Cari">
-                                <select name="jurusan" class="form-control col-sm-1 mx-3">
+                            <form method="POST">
+                              <select name="jurusan" class="form-control col-sm-3 mx-3">
                               <option>--Jurusan--</option>
                               <option>RPL</option>
                               <option>TKJ</option>
@@ -134,16 +138,8 @@
                               <option>MM</option>
                               <option>OTKP</option>
                                 </select>   
-
-                                <select name="kelas" class="form-control col-sm-1 mx-3">
-                              <option>--Kelas--</option>
-                              <option>10</option>
-                              <option>11</option>
-                              <option>12</option>
-                                </select>   
-
                             <ul class="nav navbar-right panel_toolbox">
-                              <li><a type="submit" name="fil" onclick="$('#faisalcum').load('show_siswa_f.php')" class="btn btn-secondary text-light" >Filter</i></a></li>
+                              <li><button type="submit" name="filter" class="btn btn-secondary text-light" >Filter</i></button></li>
                             </form>
                             <?php if($_SESSION['kedudukan'] == "superadmin"){?>
                               <li><a class="btn btn-outline-secondary" data-toggle="modal" data-target="#modelId"><i class="fa fa-plus" >Tambah Data</i></a></li>
@@ -169,10 +165,14 @@
                                   <th>NAMA</th>
                                   <th>KELAS</th>
                                   <th>JURUSAN</th>
+                                  <th>POIN</th>
+                                  <th>Barcode</th>
                                 </tr>
                               </thead>
-                              <tbody id="faisalcum">
-                              
+                              <tbody>
+                            <?php
+                              include "show_siswa_f.php";
+                            ?>
                               </tbody>
                               
                             </table>
@@ -221,6 +221,8 @@ if (isset ($_POST['Simpan'])){
         $text = "".$_POST['nis']."";
         $generator = new Picqer\Barcode\BarcodeGeneratorJPG();
         file_put_contents("../bar/" . $_POST['nama'] .$_POST['nis']. ".jpg", $generator->getBarcode($_POST['nis'], $generator::TYPE_CODE_128));
+        $bar = file_get_contents("../bar/" . $_POST['nama'] .$_POST['nis']. ".jpg");
+        readfile("../bar/" . $_POST['nama'] .$_POST['nis']. ".jpg");
       }elseif(isset($_POST['Hapus'])){
         $sql_hapus = "DELETE FROM data_siswa WHERE nis='".$_POST['nis']."';";
         $query_hapus = mysqli_query($conn, $sql_hapus);

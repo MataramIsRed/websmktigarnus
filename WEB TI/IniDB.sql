@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2023 at 10:54 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.1.12
+-- Generation Time: Nov 22, 2023 at 08:25 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,15 +34,16 @@ CREATE TABLE `absen_siswa` (
   `kelas` varchar(10) NOT NULL,
   `jurusan` varchar(50) NOT NULL,
   `tanggal` date NOT NULL,
-  `jam` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `jam` time NOT NULL,
+  `keterangan` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `absen_siswa`
 --
 
-INSERT INTO `absen_siswa` (`id`, `nis`, `nama`, `kelas`, `jurusan`, `tanggal`, `jam`) VALUES
-(29, 134, 'Faisal Mochmad Fakyudin', '11', 'Pengangguran berencana', '2023-11-18', '13:09:40');
+INSERT INTO `absen_siswa` (`id`, `nis`, `nama`, `kelas`, `jurusan`, `tanggal`, `jam`, `keterangan`) VALUES
+(32, 123, 'Rizal', '11', 'RPL', '2023-11-22', '13:52:36', 'Terlambat');
 
 -- --------------------------------------------------------
 
@@ -60,7 +61,7 @@ CREATE TABLE `buku` (
   `isbn` int(50) NOT NULL,
   `j_buku_baik` varchar(125) NOT NULL,
   `j_buku_rusak` varchar(125) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -75,7 +76,7 @@ CREATE TABLE `daftar_tugas` (
   `kedudukan` enum('pelajar','guru','staff','admin','superadmin') NOT NULL,
   `deadline` varchar(200) NOT NULL,
   `status` enum('done','pending') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `daftar_tugas`
@@ -104,7 +105,7 @@ CREATE TABLE `data_alumni` (
   `jenis_kelamin` varchar(50) NOT NULL,
   `jurusan` varchar(50) NOT NULL,
   `tahun_kelulusan` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -118,7 +119,7 @@ CREATE TABLE `data_guru` (
   `jenis_kelamin` enum('Laki-laki','Perempuan') NOT NULL,
   `mapel` varchar(30) NOT NULL,
   `foto` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -132,17 +133,17 @@ CREATE TABLE `data_siswa` (
   `jenis_kelamin` enum('Laki-laki','Perempuan') NOT NULL,
   `kelas` varchar(10) NOT NULL,
   `jurusan` varchar(30) NOT NULL,
-  `foto` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `foto` varchar(20) NOT NULL,
+  `poin` int(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `data_siswa`
 --
 
-INSERT INTO `data_siswa` (`nis`, `nama`, `jenis_kelamin`, `kelas`, `jurusan`, `foto`) VALUES
-(99, 'magandang', 'Perempuan', '11', 'wreqr', 'Screenshot_7.png'),
-(134, 'Faisal Mochmad Fakyudin', 'Laki-laki', '11', 'Pengangguran berencana', 'Screenshot_6.png'),
-(998, 'hanz', 'Laki-laki', '12', 'Pengangguran berencana', 'Screenshot_4.png');
+INSERT INTO `data_siswa` (`nis`, `nama`, `jenis_kelamin`, `kelas`, `jurusan`, `foto`, `poin`) VALUES
+(123, 'Rizal', 'Laki-laki', '11', 'RPL', 'bggg.png', 15),
+(8889, 'hukiyu', 'Laki-laki', '12', 'AN', 'download.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -156,7 +157,7 @@ CREATE TABLE `data_staff` (
   `role` varchar(100) NOT NULL,
   `jenis_kelamin` enum('Laki-laki','Perempuan') NOT NULL,
   `foto` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `data_staff`
@@ -177,7 +178,7 @@ CREATE TABLE `identitas` (
   `alamat_app` text NOT NULL,
   `email_app` varchar(125) NOT NULL,
   `nomor_hp` char(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `identitas`
@@ -196,7 +197,7 @@ CREATE TABLE `kategori` (
   `id_kategori` int(11) NOT NULL,
   `kode_kategori` varchar(50) NOT NULL,
   `nama_kategori` varchar(125) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -209,7 +210,7 @@ CREATE TABLE `pemberitahuan` (
   `isi_pemberitahuan` varchar(255) NOT NULL,
   `level_user` varchar(125) NOT NULL,
   `status` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -226,7 +227,7 @@ CREATE TABLE `peminjaman` (
   `kondisi_buku_saat_dipinjam` varchar(125) NOT NULL,
   `kondisi_buku_saat_dikembalikan` varchar(125) NOT NULL,
   `denda` varchar(125) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -239,7 +240,7 @@ CREATE TABLE `penerbit` (
   `kode_penerbit` varchar(125) NOT NULL,
   `nama_penerbit` varchar(50) NOT NULL,
   `verif_penerbit` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -254,7 +255,7 @@ CREATE TABLE `pengguna` (
   `pass` varchar(20) NOT NULL,
   `kedudukan` enum('superadmin','admin','guru','pelajar') NOT NULL,
   `foto` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pengguna`
@@ -280,7 +281,7 @@ CREATE TABLE `pesan` (
   `isi_pesan` text NOT NULL,
   `status` varchar(50) NOT NULL,
   `tanggal_kirim` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -296,7 +297,7 @@ CREATE TABLE `riwayat_pelajar` (
   `total_kelas` int(3) NOT NULL,
   `total_alumni` int(12) NOT NULL,
   `tahun_ajaran` year(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `riwayat_pelajar`
@@ -304,6 +305,48 @@ CREATE TABLE `riwayat_pelajar` (
 
 INSERT INTO `riwayat_pelajar` (`id`, `total_murid`, `total_siswa`, `total_siswi`, `total_kelas`, `total_alumni`, `tahun_ajaran`) VALUES
 (1, 1000, 700, 300, 25, 1200, 2023);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_site`
+--
+
+CREATE TABLE `tbl_site` (
+  `id_site` int(15) DEFAULT NULL,
+  `nama_instansi` varchar(255) DEFAULT NULL,
+  `pimpinan` varchar(255) DEFAULT NULL,
+  `pembimbing` varchar(255) DEFAULT NULL,
+  `no_telp` varchar(255) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `logo` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_site`
+--
+
+INSERT INTO `tbl_site` (`id_site`, `nama_instansi`, `pimpinan`, `pembimbing`, `no_telp`, `alamat`, `website`, `logo`) VALUES
+(1, 'TI', 'G', 'Tamara, S.IP., M.Si.', '(0711) 352-282', 'Jalan Merdeka No. 21 Kota Palembang, Sumatera Selatan 30136', 'bppd.palembang.go.id', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `umum`
+--
+
+CREATE TABLE `umum` (
+  `nama` varchar(200) NOT NULL,
+  `keterangan` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `umum`
+--
+
+INSERT INTO `umum` (`nama`, `keterangan`) VALUES
+('jam_masuk', '08:15');
 
 -- --------------------------------------------------------
 
@@ -324,7 +367,7 @@ CREATE TABLE `user` (
   `role` varchar(50) NOT NULL,
   `join_date` varchar(125) NOT NULL,
   `terakhir_login` varchar(125) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
@@ -430,6 +473,12 @@ ALTER TABLE `riwayat_pelajar`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `umum`
+--
+ALTER TABLE `umum`
+  ADD PRIMARY KEY (`nama`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -443,7 +492,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `absen_siswa`
 --
 ALTER TABLE `absen_siswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `buku`
